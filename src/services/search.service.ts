@@ -1,8 +1,7 @@
 import { HttpService } from '@nestjs/axios';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Product } from '../dtos/product.dtos';
 import { lastValueFrom, map } from 'rxjs';
-import { Db } from 'mongodb';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Search } from 'src/entities/search.entity';
@@ -10,7 +9,6 @@ import { Search } from 'src/entities/search.entity';
 export class SearchService {
   constructor(
     private readonly httpService: HttpService,
-    @Inject('MONGO') private database: Db,
     @InjectModel(Search.name) private searchModule: Model<Search>,
   ) {}
 
