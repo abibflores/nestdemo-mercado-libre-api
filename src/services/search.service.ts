@@ -1,11 +1,18 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Product } from '../dtos/product.dtos';
 import { lastValueFrom, map } from 'rxjs';
-
+import { Db } from 'mongodb';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Search } from 'src/entities/search.entity';
 @Injectable()
 export class SearchService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    @Inject('MONGO') private database: Db,
+    @InjectModel(Search.name) private searchModule: Model<Search>,
+  ) {}
 
   filterProperties(data: Product[]) {
     return data.map((product) => {
@@ -29,5 +36,22 @@ export class SearchService {
     );
     const productList = this.filterProperties(response);
     return productList;
+  }
+
+  async getSearch(query: string) {
+    const bdResult = await this.searchModule.findOne({ name: query }).exec();
+    if (bdResult) {
+      return bdResult;
+    }
+    const mlResult = await this.findOne(query);
+
+    const data = {
+      name: query,
+      total: mlResult.length,
+      results: mlResult,
+    };
+
+    const newSearch = new this.searchModule(data);
+    return newSearch.save();
   }
 }
