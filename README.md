@@ -56,6 +56,14 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# documentation
+$ https://hidden-shore-71099.herokuapp.com/api
+
+# deploy
+$ https://hidden-shore-71099.herokuapp.com/api/search?q=balon
+
+
 ```
 
 ## Support
