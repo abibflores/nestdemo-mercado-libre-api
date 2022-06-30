@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const PORT = process.env.PORT || 3000;
   const config = new DocumentBuilder()
     .setTitle('API')
     .setDescription('Demo Mercado Libre')
@@ -12,7 +12,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
-  await app.listen(3000);
+  app.enableCors();
+  await app.listen(PORT);
 }
 bootstrap();
