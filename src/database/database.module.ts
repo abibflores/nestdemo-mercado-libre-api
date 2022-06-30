@@ -27,7 +27,6 @@ import config from '../config';
       useFactory: async (configService: ConfigType<typeof config>) => {
         const { name, user, password } = configService.database;
         const uri = `mongodb+srv://${user}:${password}@cluster0.8tksinr.mongodb.net/?authMechanism=DEFAULT`;
-        console.log(uri, 'uri');
         const client = new MongoClient(uri);
         await client.connect();
         const database = client.db(name);
