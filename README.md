@@ -61,7 +61,7 @@ $ npm run test:cov
 $ https://hidden-shore-71099.herokuapp.com/api
 
 # deploy
-$ https://hidden-shore-71099.herokuapp.com/api/search?q=balon
+$ https://hidden-shore-71099.herokuapp.com/api/search?query=balon
 
 
 ```
